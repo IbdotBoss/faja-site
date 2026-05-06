@@ -1,4 +1,4 @@
-import type { Config } from "tailwindcss";
+import type { Config } from "tailwindcss"
 
 const config: Config = {
   content: [
@@ -9,11 +9,18 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        background: "var(--color-bg)",
+        foreground: "var(--color-text)",
+        accent: "var(--color-accent)",
+      },
+      fontFamily: {
+        display: ["var(--font-display)"],
+      },
+      transitionTimingFunction: {
+        snap: "cubic-bezier(0.85, 0, 0.15, 1)",
       },
     },
   },
   plugins: [],
-};
-export default config;
+}
+export default config
