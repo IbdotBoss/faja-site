@@ -3,6 +3,7 @@
 import { useState, useRef } from "react"
 import { gsap } from "@/lib/gsap"
 import { DURATION } from "@/lib/ease"
+import { Select, SelectItem } from "@/components/ui/select"
 import Fascia from "@/components/Fascia"
 import VerticalCutReveal from "@/components/fancy/VerticalCutReveal"
 
@@ -106,10 +107,19 @@ export default function Contact() {
             />
 
             {/* Project type dropdown */}
-            <ProjectTypeSelect
+            <Select
+              label="Project type"
               value={formData.projectType}
-              onChange={(v) => setFormData({ ...formData, projectType: v })}
-            />
+              onValueChange={(v) => setFormData({ ...formData, projectType: v })}
+              placeholder="Select project type"
+              required
+            >
+              {PROJECT_TYPES.map((type) => (
+                <SelectItem key={type} value={type}>
+                  {type}
+                </SelectItem>
+              ))}
+            </Select>
 
             {/* Message */}
             <div>
@@ -227,43 +237,3 @@ function InputField({
   )
 }
 
-function ProjectTypeSelect({
-  value,
-  onChange,
-}: {
-  value: string
-  onChange: (v: string) => void
-}) {
-  return (
-    <div>
-      <label
-        className="text-xs tracking-[0.1em] uppercase text-[#1A1A4D] mb-2 block"
-        style={{ fontWeight: 300, fontVariationSettings: '"wght" 300' }}
-      >
-        Project type
-      </label>
-      <select
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        required
-        className="w-full bg-transparent text-[#0A0A0A] text-sm py-2 focus:outline-none appearance-none cursor-pointer"
-        style={{
-          border: "none",
-          borderBottom: "1px solid #1A1A4D",
-          borderRadius: 0,
-          fontWeight: 380,
-          fontVariationSettings: '"wght" 380',
-        }}
-      >
-        <option value="" disabled>
-          Select project type
-        </option>
-        {PROJECT_TYPES.map((type) => (
-          <option key={type} value={type}>
-            {type}
-          </option>
-        ))}
-      </select>
-    </div>
-  )
-}
