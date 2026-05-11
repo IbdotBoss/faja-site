@@ -1,7 +1,7 @@
 "use client"
 
-import { useRef, useEffect } from "react"
-import { useScroll, useTransform, useSpring, motion, MotionValue } from "motion/react"
+import { useRef } from "react"
+import { useScroll, useTransform, useSpring, MotionValue } from "motion/react"
 
 interface ScrollAndSwapOptions {
   /** Container ref for scroll tracking */

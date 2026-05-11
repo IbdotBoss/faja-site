@@ -109,7 +109,7 @@ export default function RevealSection({
   return (
     <section ref={sectionRef} id={id} className={className}>
       <div ref={fasciaRef} data-fascia className="w-full">
-        <Fascia className="mb-16" />
+        <Fascia controlled className="mb-16" />
       </div>
       {children}
     </section>

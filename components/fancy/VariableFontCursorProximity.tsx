@@ -88,6 +88,8 @@ const VariableFontCursorProximity = forwardRef<HTMLElement, TextProps>(
 
     useAnimationFrame(() => {
       if (!containerRef.current) return
+      // Skip animation frame when disabled (e.g., during hero load sequence)
+      if (containerRef.current.closest("[data-proximity]") === null) return
       const containerRect = containerRef.current.getBoundingClientRect()
 
       letterRefs.current.forEach((letterRef, index) => {

@@ -107,12 +107,14 @@ export default function Hero() {
           )
         }
 
-        // Final settle
+        // Final settle — and enable cursor proximity
         tl.call(
           () => {
             for (let i = 0; i < finalText.length; i++) {
               ceilingLetters[i].textContent = finalText[i]
             }
+            // Enable cursor proximity after scramble completes
+            sectionRef.current?.setAttribute("data-proximity", "enabled")
           },
           [],
           startTime + totalDuration

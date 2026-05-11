@@ -6,12 +6,16 @@ import { DURATION } from "@/lib/ease"
 
 interface FasciaProps {
   className?: string
+  controlled?: boolean
 }
 
-export default function Fascia({ className = "" }: FasciaProps) {
+export default function Fascia({ className = "", controlled = false }: FasciaProps) {
   const lineRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    // Skip own ScrollTrigger when controlled by a parent (RevealSection)
+    if (controlled) return
+
     const line = lineRef.current
     if (!line) return
 
@@ -43,7 +47,7 @@ export default function Fascia({ className = "" }: FasciaProps) {
     })
 
     return () => ctx.revert()
-  }, [])
+  }, [controlled])
 
   return (
     <div

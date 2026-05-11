@@ -20,6 +20,9 @@ export const metadata: Metadata = {
       "faja builds the systems that let your business operate beyond its size.",
     type: "website",
   },
+  icons: {
+    icon: "/favicon.svg",
+  },
 }
 
 export default function RootLayout({

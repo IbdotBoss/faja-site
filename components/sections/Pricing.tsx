@@ -85,9 +85,14 @@ function PricingCard({
       ref={cardRef}
       className="relative flex-1 min-w-0 p-8 md:p-10 bg-white"
       style={{
-        border: tier.accent ? "1px solid transparent" : "none",
+        border: tier.accent
+          ? "1px solid transparent"
+          : "1px solid #1A1A4D",
         borderRadius: 0,
-        transition: "border-color 0.5s cubic-bezier(0.85, 0, 0.15, 1)",
+        ...(tier.accent && {
+          transition:
+            "border-color 0.5s cubic-bezier(0.85, 0, 0.15, 1)",
+        }),
       }}
     >
       <div className="relative z-10">

@@ -204,6 +204,8 @@ function InputField({
   onChange: (v: string) => void
   required?: boolean
 }) {
+  const [focused, setFocused] = useState(false)
+
   return (
     <div>
       <label
@@ -218,18 +220,29 @@ function InputField({
           value={value}
           onChange={(e) => onChange(e.target.value)}
           required={required}
+          onFocus={() => setFocused(true)}
+          onBlur={() => setFocused(false)}
           className="w-full bg-transparent text-[#0A0A0A] text-sm py-2 focus:outline-none"
           style={{
             border: "none",
-            borderBottom: "1px solid #1A1A4D",
+            borderBottom: "1px solid rgba(26, 26, 77, 0.2)",
             borderRadius: 0,
             fontWeight: 380,
             fontVariationSettings: '"wght" 380',
           }}
-          onFocus={(e) => {
-            // Scale bottom border from center
-            const input = e.target
-            input.style.borderBottom = "1px solid #1A1A4D"
+        />
+        {/* Focus indicator: animates center-out via scaleX */}
+        <div
+          style={{
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: "1px",
+            backgroundColor: "#1A1A4D",
+            transform: focused ? "scaleX(1)" : "scaleX(0)",
+            transformOrigin: "center",
+            transition: "transform 0.2s cubic-bezier(0.85, 0, 0.15, 1)",
           }}
         />
       </div>

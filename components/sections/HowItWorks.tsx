@@ -163,27 +163,12 @@ export default function HowItWorks() {
                   {step.description}
                 </p>
               </div>
-
-              {/* Connector between steps (not after last) */}
-              {i < STEPS.length - 1 && (
-                <div className="flex items-center md:hidden my-4 w-full">
-                  <div
-                    ref={connectorRef}
-                    className="h-px bg-[#1A1A4D] w-full"
-                  />
-                </div>
-              )}
             </div>
           ))}
-
-          {/* Desktop connector strip between squares */}
-          <div className="hidden md:flex absolute left-0 right-0 top-0 items-start">
-            {/* Connector positioned between squares — we'll use a separate approach */}
-          </div>
         </div>
 
-        {/* Horizontal connector on desktop */}
-        <div className="hidden md:block mt-[-42px]">
+        {/* Connector strip below steps */}
+        <div className="mt-6">
           <div
             ref={connectorRef}
             className="h-px bg-[#1A1A4D] w-full"

@@ -106,11 +106,27 @@ function VelocityText({
   })
 
   const directionFactor = useRef<number>(1)
+  const frozen = useRef(false)
   useAnimationFrame((_t, delta) => {
+    const vf = velocityFactor.get()
+
+    // Freeze marquee when scroll velocity is below threshold
+    if (Math.abs(vf) < 0.15) {
+      if (!frozen.current) {
+        frozen.current = true
+      }
+      // Slowly drift at minimum speed to prevent stutter
+      const drift = baseVelocity * (delta / 1000) * 0.05
+      baseX.set(baseX.get() + drift)
+      return
+    }
+
+    frozen.current = false
+
     let moveBy = directionFactor.current * baseVelocity * (delta / 1000)
-    if (velocityFactor.get() < 0) directionFactor.current = -1
-    else if (velocityFactor.get() > 0) directionFactor.current = 1
-    moveBy += directionFactor.current * moveBy * velocityFactor.get()
+    if (vf < 0) directionFactor.current = -1
+    else if (vf > 0) directionFactor.current = 1
+    moveBy += directionFactor.current * moveBy * vf
     baseX.set(baseX.get() + moveBy)
   })
 
