@@ -42,6 +42,17 @@ export default function Nav() {
     const onScroll = () => {
       // Don't hide nav when menu is open
       if (menuOpen) return
+      // Skip animations on reduced motion
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        const scrollY = window.scrollY
+        // Still update wordmark weight
+        if (wordmarkRef.current) {
+          const progress = Math.min(scrollY / (window.innerHeight * 0.2), 1)
+          const wght = 500 + progress * 200
+          wordmarkRef.current.style.fontVariationSettings = `"wght" ${wght}`
+        }
+        return
+      }
 
       const scrollY = window.scrollY
 
@@ -149,7 +160,7 @@ export default function Nav() {
             style={{ borderRadius: "999px" }}
           >
             <span>Start a project</span>
-            <span className="ml-1">→</span>
+            <span className="ml-1 arrow">→</span>
           </a>
 
           {/* Hamburger — mobile only */}

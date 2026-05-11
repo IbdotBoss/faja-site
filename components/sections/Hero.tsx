@@ -16,6 +16,9 @@ export default function Hero() {
   const timerRef = useRef<gsap.core.Timeline | null>(null)
 
   useEffect(() => {
+    // Skip animations on reduced motion
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ paused: true })
 
@@ -228,12 +231,12 @@ export default function Hero() {
             style={{ borderRadius: "999px" }}
           >
             <span>Start a project</span>
-            <span className="ml-1">→</span>
+            <span className="ml-1 arrow">→</span>
           </a>
           <a
             href="#work"
             onClick={(e) => handleCTAClick(e, "#work")}
-            className="text-sm text-[#1A1A4D] hover:text-[#0A0A0A] no-underline transition-colors"
+            className="text-sm text-[#1A1A4D] hover:text-[#0A0A0A] no-underline transition-colors rounded-full"
             style={{ fontWeight: 380, fontVariationSettings: '"wght" 380' }}
           >
             See our work

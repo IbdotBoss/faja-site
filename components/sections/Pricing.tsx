@@ -87,7 +87,7 @@ function PricingCard({
       style={{
         border: tier.accent
           ? "1px solid transparent"
-          : "1px solid #1A1A4D",
+          : "1px solid #0A0A0A",
         borderRadius: 0,
         ...(tier.accent && {
           transition:
@@ -137,7 +137,7 @@ function PricingCard({
           {tier.features.map((feature, i) => (
             <li key={i} className="flex items-start gap-3">
               <span
-                className="w-3 h-3 border border-[#1A1A4D] mt-1 shrink-0"
+                className="w-3 h-3 border border-[#0A0A0A] mt-1 shrink-0"
                 style={{ borderRadius: 0 }}
               />
               <span
@@ -158,11 +158,11 @@ function PricingCard({
         <a
           href="#contact"
           onClick={handleClick}
-          className="btn-wipe px-6 py-3 text-sm rounded-full inline-flex"
+          className="btn-wipe px-8 py-3 text-sm rounded-full inline-flex"
           style={{ borderRadius: "999px" }}
         >
           <span>Start a project</span>
-          <span className="ml-1">→</span>
+          <span className="ml-1 arrow">→</span>
         </a>
       </div>
     </div>
@@ -181,7 +181,7 @@ export default function Pricing() {
             <div key={i} className="flex-1">
               <PricingCard tier={tier} />
               {i < TIERS.length - 1 && (
-                <div className="h-px bg-[#1A1A4D] opacity-20 md:hidden mx-8" />
+                <div className="h-px bg-[#0A0A0A] opacity-20 md:hidden mx-8" />
               )}
             </div>
           ))}
@@ -197,7 +197,7 @@ export default function Pricing() {
                 .querySelector("#contact")
                 ?.scrollIntoView({ behavior: "smooth" })
             }}
-            className="text-sm text-[#1A1A4D] no-underline hover:text-[#0A0A0A] transition-colors"
+            className="text-sm text-[#0A0A0A] no-underline hover:text-[#666666] transition-colors"
           >
             Not sure which is right? Talk to us first. →
           </a>

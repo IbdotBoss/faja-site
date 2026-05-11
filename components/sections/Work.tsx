@@ -1,8 +1,8 @@
 "use client"
 
-import { useRef } from "react"
+import { useRef, useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { gsap } from "@/lib/gsap"
+import { gsap, ScrollTrigger } from "@/lib/gsap"
 import { DURATION } from "@/lib/ease"
 import Fascia from "@/components/Fascia"
 import StackingCards, { StackingCardItem } from "@/components/fancy/StackingCards"
@@ -15,7 +15,32 @@ function CaseCard({
 }) {
   const cardRef = useRef<HTMLDivElement>(null)
   const borderRef = useRef<HTMLDivElement>(null)
+  const situationRef = useRef<HTMLParagraphElement>(null)
+  const buildRef = useRef<HTMLParagraphElement>(null)
   const router = useRouter()
+
+  // Scroll-driven weight scrub on situation + build text
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+
+    const els = [situationRef.current, buildRef.current].filter(Boolean) as HTMLElement[]
+    if (els.length === 0) return
+
+    const ctx = gsap.context(() => {
+      els.forEach((el) => {
+        ScrollTrigger.create({
+          trigger: el,
+          start: "top bottom",
+          end: "bottom top",
+          onUpdate: (self) => {
+            const wght = 380 + self.progress * 40
+            el.style.fontVariationSettings = `"wght" ${wght}`
+          },
+        })
+      })
+    })
+    return () => ctx.revert()
+  }, [])
 
   const handleClick = () => {
     const card = cardRef.current
@@ -66,7 +91,7 @@ function CaseCard({
     >
       <div
         ref={borderRef}
-        className="border border-[#1A1A4D] p-8 md:p-12 bg-white"
+        className="border border-[#0A0A0A] p-8 md:p-12 bg-white"
         style={{
           borderRadius: 0,
           borderWidth: "1px",
@@ -75,7 +100,7 @@ function CaseCard({
       >
         {/* Service label */}
         <span
-          className="text-xs tracking-[0.15em] uppercase text-[#1A1A4D] mb-4 block"
+          className="text-xs tracking-[0.15em] uppercase text-[#0A0A0A] mb-4 block"
           style={{ fontWeight: 300, fontVariationSettings: '"wght" 300' }}
         >
           {study.label}
@@ -95,6 +120,7 @@ function CaseCard({
 
         {/* Situation */}
         <p
+          ref={situationRef}
           className="text-sm md:text-base mb-4 leading-relaxed"
           style={{
             fontWeight: 380,
@@ -107,6 +133,7 @@ function CaseCard({
 
         {/* What we build */}
         <p
+          ref={buildRef}
           className="text-sm md:text-base mb-6 leading-relaxed"
           style={{
             fontWeight: 380,
@@ -118,7 +145,7 @@ function CaseCard({
         </p>
 
         {/* Before / After contrast */}
-        <div className="border-l border-[#1A1A4D] pl-4 mb-4">
+        <div className="border-l border-[#0A0A0A] pl-4 mb-4">
           <p
             className="text-sm mb-2"
             style={{ fontWeight: 300, fontVariationSettings: '"wght" 300', color: "#0A0A0A" }}
@@ -143,7 +170,7 @@ function CaseCard({
           style={{
             fontWeight: 380,
             fontVariationSettings: '"wght" 380',
-            color: "#1A1A4D",
+            color: "#0A0A0A",
           }}
         >
           {study.beyond}

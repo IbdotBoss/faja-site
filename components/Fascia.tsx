@@ -7,12 +7,17 @@ import { DURATION } from "@/lib/ease"
 interface FasciaProps {
   className?: string
   controlled?: boolean
+  dark?: boolean
 }
 
-export default function Fascia({ className = "", controlled = false }: FasciaProps) {
+export default function Fascia({ className = "", controlled = false, dark = false }: FasciaProps) {
   const lineRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    // Check reduced motion
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    if (prefersReduced) return
+
     // Skip own ScrollTrigger when controlled by a parent (RevealSection)
     if (controlled) return
 
@@ -52,8 +57,15 @@ export default function Fascia({ className = "", controlled = false }: FasciaPro
   return (
     <div
       ref={lineRef}
-      className={`w-full h-px bg-[#1A1A4D] origin-left ${className}`}
-      style={{ transform: "scaleX(0)" }}
+      className={`w-full h-px origin-left ${dark ? "bg-[#0A0A0A]" : "bg-[#1A1A4D]"} ${className}`}
+      /** When controlled, parent owns the animation; when standalone, GSAP animates from scaleX(0).
+       *  Only apply inline scaleX(0) when controlled=false AND no reduced motion.
+       *  When controlled, the parent decides initial state. */
+      style={
+        !controlled
+          ? { transform: "scaleX(0)" }
+          : undefined
+      }
     />
   )
 }

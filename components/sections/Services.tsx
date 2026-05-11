@@ -32,8 +32,32 @@ function ServiceCard({
 }: (typeof SERVICES)[number]) {
   const cardRef = useRef<HTMLDivElement>(null)
   const svgRef = useRef<SVGSVGElement>(null)
+  const weightRef = useRef<HTMLDivElement>(null)
+
+  // Scroll-driven weight scrub on description
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+    const container = weightRef.current
+    if (!container) return
+
+    const ctx = gsap.context(() => {
+      ScrollTrigger.create({
+        trigger: container,
+        start: "top bottom",
+        end: "bottom top",
+        onUpdate: (self) => {
+          const wght = 380 + self.progress * 40
+          container.style.fontVariationSettings = `"wght" ${wght}`
+        },
+      })
+    })
+    return () => ctx.revert()
+  }, [])
 
   useEffect(() => {
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    if (prefersReduced) return
+
     const card = cardRef.current
     const rect = svgRef.current?.querySelector("rect")
     if (!card || !rect) return
@@ -74,7 +98,7 @@ function ServiceCard({
       ref={cardRef}
       className="relative group flex-1 min-w-0 p-8 md:p-10"
     >
-      {/* SVG wire hover */}
+      {/* SVG wire hover — indigo is a motion-only accent */}
       <svg
         ref={svgRef}
         className="absolute inset-0 w-full h-full pointer-events-none"
@@ -92,13 +116,13 @@ function ServiceCard({
         />
       </svg>
 
-      {/* Card border (static) */}
-      <div className="absolute inset-0 border border-[#1A1A4D]" />
+      {/* Card border (static — black at rest) */}
+      <div className="absolute inset-0 border border-[#0A0A0A]" />
 
       {/* Content */}
       <div className="relative z-10">
         <span
-          className="text-xs tracking-[0.15em] uppercase text-[#1A1A4D] mb-6 block"
+          className="text-xs tracking-[0.15em] uppercase text-[#0A0A0A] mb-6 block"
           style={{ fontWeight: 300, fontVariationSettings: '"wght" 300' }}
         >
           {label}
@@ -114,6 +138,7 @@ function ServiceCard({
           {name}
         </h3>
         <p
+          ref={weightRef}
           className="text-sm leading-relaxed"
           style={{
             fontWeight: 380,
@@ -133,6 +158,15 @@ export default function Services() {
 
   // Vertical rules snap in
   useEffect(() => {
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    if (prefersReduced) {
+      // Show all rules immediately
+      document.querySelectorAll("[data-vrule]").forEach((el) => {
+        ;(el as HTMLElement).style.transform = "scaleY(1)"
+      })
+      return
+    }
+
     const rules = containerRef.current?.querySelectorAll("[data-vrule]")
     if (!rules) return
 
@@ -185,13 +219,13 @@ export default function Services() {
               {i < SERVICES.length - 1 && (
                 <div
                   data-vrule
-                  className="w-px bg-[#1A1A4D] mx-0 self-stretch hidden md:block"
+                  className="w-px bg-[#0A0A0A] mx-0 self-stretch hidden md:block"
                   style={{ transform: "scaleY(0)" }}
                 />
               )}
               {/* Horizontal rule on mobile */}
               {i < SERVICES.length - 1 && (
-                <div className="h-px bg-[#1A1A4D] w-full md:hidden" />
+                <div className="h-px bg-[#0A0A0A] opacity-20 w-full md:hidden" />
               )}
             </div>
           ))}

@@ -36,6 +36,8 @@ export default function HowItWorks() {
   const descRefs = useRef<(HTMLParagraphElement | null)[]>([])
 
   useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+
     const section = sectionRef.current
     if (!section) return
 
@@ -62,7 +64,7 @@ export default function HowItWorks() {
       tl.to(connectorRef.current, {
         scaleX: 1,
         duration: DURATION.sequence,
-        ease: "none", // linear connector draw
+        ease: "taut",
         transformOrigin: "left center",
       })
 
@@ -118,7 +120,7 @@ export default function HowItWorks() {
               <div className="flex flex-col items-start md:items-start gap-3 w-full">
                 {/* Step number */}
                 <span
-                  className="text-xs text-[#1A1A4D] tracking-[0.15em]"
+                  className="text-xs text-[#0A0A0A] tracking-[0.15em]"
                   style={{ fontWeight: 300, fontVariationSettings: '"wght" 300' }}
                 >
                   {step.number}
@@ -129,7 +131,7 @@ export default function HowItWorks() {
                   ref={(el) => {
                     squareRefs.current[i] = el
                   }}
-                  className="w-3 h-3 border border-[#1A1A4D]"
+                  className="w-3 h-3 border border-[#0A0A0A]"
                   style={{ borderRadius: 0 }}
                 />
 

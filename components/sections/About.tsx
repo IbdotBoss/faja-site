@@ -17,6 +17,8 @@ export default function About() {
 
   // Variable weight on scroll
   useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+
     const section = sectionRef.current
     if (!section) return
 
@@ -55,15 +57,18 @@ export default function About() {
           {MANIFESTO[0]}
         </p>
 
-        {/* Highlighted line: "We build what closes it." */}
-        <p className="text-lg md:text-xl leading-relaxed mb-8">
-          <TextHighlighter
-            color="#1A1A4D"
-            className="text-lg md:text-xl px-1"
-          >
-            We build what closes it.
-          </TextHighlighter>
-        </p>
+        {/* Pull-quote: "We build what closes it." — 3x size, wght 900, breaks column */}
+        <div className="relative -mx-8 md:-mx-16 lg:-mx-24 my-12 md:my-16">
+          <p className="text-5xl md:text-7xl lg:text-8xl leading-[0.95] tracking-[-0.03em] mb-0">
+            <TextHighlighter
+              color="#1A1A4D"
+              className="text-5xl md:text-7xl lg:text-8xl px-1"
+              transition={{ duration: 0.8, ease: [0.85, 0, 0.15, 1] }}
+            >
+              We build what closes it.
+            </TextHighlighter>
+          </p>
+        </div>
 
         {/* Paragraph 2 */}
         <p
@@ -79,13 +84,13 @@ export default function About() {
           {MANIFESTO[1]}
         </p>
 
-        {/* Final line with Vertical Cut Reveal */}
+        {/* Final line with Vertical Cut Reveal — wght 380, #0A0A0A */}
         <p
           className="text-lg md:text-xl leading-relaxed"
           style={{
             fontWeight: 460,
             fontVariationSettings: '"wght" 460',
-            color: "#1A1A4D",
+            color: "#0A0A0A",
           }}
         >
           <VerticalCutReveal splitBy="words" staggerDuration={0.08}>

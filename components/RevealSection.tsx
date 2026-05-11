@@ -20,8 +20,13 @@ export default function RevealSection({
   const fasciaRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+
     const section = sectionRef.current
     if (!section) return
+
+    // Skip GSAP timeline on reduced motion — show everything immediately
+    if (prefersReduced) return
 
     const ctx = gsap.context(() => {
       // Find the Fascia element inside this section

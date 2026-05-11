@@ -124,7 +124,7 @@ export default function Contact() {
             {/* Message */}
             <div>
               <label
-                className="text-xs tracking-[0.1em] uppercase text-[#1A1A4D] mb-2 block"
+                className="text-xs tracking-[0.1em] uppercase text-[#0A0A0A] mb-2 block"
                 style={{
                   fontWeight: 300,
                   fontVariationSettings: '"wght" 300',
@@ -141,7 +141,7 @@ export default function Contact() {
                 className="w-full bg-transparent text-[#0A0A0A] text-sm focus:outline-none resize-none py-2"
                 style={{
                   border: "none",
-                  borderBottom: "1px solid #1A1A4D",
+                  borderBottom: "1px solid rgba(10, 10, 10, 0.2)",
                   borderRadius: 0,
                   fontWeight: 380,
                   fontVariationSettings: '"wght" 380',
@@ -155,8 +155,8 @@ export default function Contact() {
               className="btn-wipe px-8 py-3 text-sm rounded-full w-full md:w-auto"
               style={{ borderRadius: "999px" }}
             >
-              <span>Send it</span>
-              <span className="ml-1">→</span>
+            <span>Send it</span>
+            <span className="ml-1 arrow">→</span>
             </button>
 
             {/* Minimum engagement note */}
@@ -209,7 +209,7 @@ function InputField({
   return (
     <div>
       <label
-        className="text-xs tracking-[0.1em] uppercase text-[#1A1A4D] mb-2 block"
+          className="text-xs tracking-[0.1em] uppercase text-[#0A0A0A] mb-2 block"
         style={{ fontWeight: 300, fontVariationSettings: '"wght" 300' }}
       >
         {label}
@@ -225,7 +225,7 @@ function InputField({
           className="w-full bg-transparent text-[#0A0A0A] text-sm py-2 focus:outline-none"
           style={{
             border: "none",
-            borderBottom: "1px solid rgba(26, 26, 77, 0.2)",
+            borderBottom: "1px solid rgba(10, 10, 10, 0.2)",
             borderRadius: 0,
             fontWeight: 380,
             fontVariationSettings: '"wght" 380',
